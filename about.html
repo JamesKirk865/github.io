@@ -1,0 +1,250 @@
+﻿<!docktype html>
+<html>
+<head>
+<title>
+City_17/cmb
+</title>
+	<style>
+    @font-face {
+        font-family: Nixie;
+        src: url(NixieOne-Regular.otf);
+      }
+      @keyframes flicker {
+        0% { opacity: 0.8; }
+        50% { opacity: 1; }
+        100% { opacity: 0.8; }
+      }
+
+
+	@font-face{
+		font-family: 'hl';
+		src: url(fonts/hl.ttf);
+	    font-style: normal;
+		font-weight: normal;
+	}
+	body{
+        background-color: #000000;
+	}
+	p{
+		color:#e27115;
+		padding-left:10px;
+		font-size:5vh; 
+	}
+    img{
+        width:100%;
+        height:auto;
+	}
+	footer{
+        
+	}
+	nav{
+		padding-left:35vw;
+	}
+	a{
+		color:fdb813;
+		font:5vh hl;
+		text-decoration: none;
+	}
+    h2{
+        font: 4vh hl;
+        color:#742206;
+        padding-left:30%;
+	}
+
+    
+    #dmeter-container-container {
+        height: 50%;
+        width: 100%;
+        display: table;
+      }
+      #dmeter-container {
+        top: 0;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      #divergence {
+        height: 300px;
+        letter-spacing: -4px;
+        word-spacing: 0px;
+        position: relative;
+        margin: 0;
+      }
+      .regular.letter {
+        position: relative;
+        top: 38px;
+        left: -2px;
+        display: inline-block;
+        width: 94px;
+        line-height: 15vh;
+        font-family: BONX-AltMedium, Nixie, Futurica;
+        font-size: 138px;
+        color: #fffa07;
+        text-align: center;
+        -webkit-transform: scaleY(1.02);
+        text-shadow: 0px 0px 10px #ff4c0d, 0px 0px 10px #ff4c0d, 0px 0px 10px #ff4c0d;
+        /* for brighter shadow */
+        z-index: 1;
+        transition: opacity 150ms ease;
+        vertical-align: top;
+      }
+      .empty.letter {
+        position: relative;
+        color: rgba(0,0,0,0);
+        top: 0px;
+        display: inline-block;
+        width: 94px;
+        height: 256px;
+        text-align: center;
+        z-index: 1;
+        transition: opacity 150ms ease;
+        background-image: url(dmeter_dot.png);
+      }
+      
+      #fadeout {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: opacity 1200ms ease;
+        z-index: 0;
+      }
+      .letter.fd {
+        color: #fffa0744;
+        opacity: 0.8;
+      }
+      .empty-letter.fd {
+        opacity: 0.8;
+      }
+      .new {
+        opacity: 0.4;
+        color:#fff;
+      }
+      
+      .an {
+        animation-name: flicker;
+        animation-duration: 400ms;
+        animation-iteration-count: infinite;
+      }
+      
+      #buttons {
+        font-size: 2vmin;
+        color: #fffa07;
+        position: fixed;
+        top:50;left:0;
+        font-family: BONX-AltMedium, Nixie, Futurica, sans-serif;
+        z-index:20;
+      }
+      .button {
+        padding: 1vmin;
+        display: inline-block;
+        opacity:0.5;
+        transition: opacity 100ms ease;
+        cursor: pointer;
+      }
+      .button:hover { opacity: 0.9; } 
+      
+      /* @media all  {
+        .letter {
+          width: 11.75vmin;
+          line-height: 22.9vmin;
+          font-size: 13vmin;
+        } 
+      } */
+	</style>
+</head>
+<body onload="nixieclock();
+          if(time_timer == null)
+            time_timer = setInterval(function() {nixieclock();}, 1000);" >
+
+	<header>
+		<p>
+		Наши покровители. Союз Вселенных, включающий множество дружных и порабощенных миров из нескольких параллельных вселенных. Те ,кого мы должны благодарить за безопасность, мир и спокойствие. Вступайте в ряды 
+			<a href='metropolice.html'>ГО</a>, чтобы помочь им сделать мир лучше.
+		</p>
+	</header>
+        <img src=https://yt3.ggpht.com/a/AGF-l7_vsUxkzqIfFdI32chE_Q6M5SbiNoBvIjl3eg=s900-c-k-c0xffffffff-no-rj-mo>
+	<footer>
+		<p> <nav>
+			<a href='https://halflife.fandom.com/ru/wiki/%D0%90%D0%BB%D1%8C%D1%8F%D0%BD%D1%81'>узнать </a>_
+			<a href='https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D1%8C%D1%8F%D0%BD%D1%81_(Half-Life)'>больше</a>
+			</nav>
+		</p>
+	
+
+		
+    <div id="dmeter-container-container">
+      <div id="dmeter-container">
+          <div id="divergence" style="width: 752px;">
+
+        </div>
+      </div>
+    </div>
+
+    <h2>
+    <em>Межвселенское время Альянса<em>
+    </h2>
+	</footer>
+	
+    <script>
+      var fadeout_timer = null;
+      var time_timer = null;
+      var time_flicker = true;
+      
+      function nixieclock() {
+        var time = new Date();
+        var str = "";
+        if(time_flicker) time_flicker = false;
+        else time_flicker = true;
+        
+        str = " ." + ( time.getHours() < 10 ? "0"+time.getHours() : time.getHours())
+            + (time_flicker ? ":" : " ") +
+            ( time.getMinutes() < 10 ? "0"+time.getMinutes() : time.getMinutes())
+            + (time_flicker ? ":" : " ") +
+            ( time.getSeconds() < 10 ? "0"+time.getSeconds() : time.getSeconds());
+        generateDivergence(str);
+          
+        }
+    
+      function generateDivergence(text) {
+        var out = "";
+        var lamps;
+        
+        if (window.innerWidth/100 < text.length) lamps = Math.floor(window.innerWidth/100);
+        else lamps = text.length;
+        
+        var fadeout = "";
+        var old_lamps = document.getElementsByClassName("letter");
+        
+        for (i=0, sz=old_lamps.length; i<lamps && i<sz; i++) {
+          if(old_lamps[i].innerHTML === '.')
+            fadeout += "<div class=\"fd empty letter\">";
+          else	
+            fadeout += "<div class=\"fd regular letter\">";
+          if (typeof old_lamps[i] !== 'undefined' && old_lamps[i].innerHTML[0] != text[i])
+            fadeout += old_lamps[i].innerHTML[0];
+          fadeout += "</div>";
+        }
+
+        for (i=0; i<lamps; i++) {
+          out += `<div class="${text[i] === '.' ? 'empty' : 'regular'} letter an">${text[i]}</div>`;
+        }
+        
+        
+        out += "<div id=\"fadeout\">"+fadeout+"</div>";
+
+        if (lamps < 8) lamps = 8;
+        
+        document.getElementById("divergence").innerHTML = out;
+        document.getElementById("divergence").style.width = (lamps*94) + "px";
+        
+        setTimeout(function() {
+          document.getElementById("fadeout").style.opacity = 0;
+        },1);
+        
+        fadeout_timer = setTimeout(function() {
+          document.getElementById('fadeout').innerHTML = "";
+        },900);
+      }
+
+    </script>
+</body>
+</html>
